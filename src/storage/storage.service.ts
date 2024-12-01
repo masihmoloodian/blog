@@ -32,7 +32,10 @@ export class StorageService {
     });
   }
 
-  async generateSignedPutUrl(expiresIn: number = 60 * 60): Promise<{
+  async generateSignedPutUrl(
+    userId: string,
+    expiresIn: number = 60 * 60,
+  ): Promise<{
     key: string;
     signedUrl: string;
   }> {
@@ -40,6 +43,9 @@ export class StorageService {
     const command = new PutObjectCommand({
       Bucket: this.bucketName,
       Key: key,
+      Metadata: {
+        userId,
+      },
     });
 
     const signedUrl = await getSignedUrl(this.s3, command, { expiresIn });

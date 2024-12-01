@@ -3,6 +3,8 @@ import { StorageService } from './storage.service';
 import { ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { FirebaseAuthGuard } from 'src/auth/guards/firebase-auth.guard';
 import { ResponseDto } from 'src/shared/response.dto';
+import { UserEntity } from 'src/user/entities/user.entity';
+import { User } from 'src/auth/decorator/user.decorator';
 
 @Controller('storage')
 export class StorageController {
@@ -12,8 +14,8 @@ export class StorageController {
   @ApiOperation({ summary: 'Generate signed url to perform PUT action' })
   @ApiBearerAuth()
   @UseGuards(FirebaseAuthGuard)
-  async generateSignedPutUrl() {
-    const result = await this.storageService.generateSignedPutUrl();
+  async generateSignedPutUrl(@User() user: UserEntity) {
+    const result = await this.storageService.generateSignedPutUrl(user.id);
     return new ResponseDto(result);
   }
 }
