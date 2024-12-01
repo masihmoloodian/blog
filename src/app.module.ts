@@ -8,6 +8,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { FirebaseModule } from './firebase/firebase.module';
 import { BlogModule } from './blog/blog.module';
+import { StorageModule } from './storage/storage.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { BlogModule } from './blog/blog.module';
     FirebaseModule,
     AuthModule,
     BlogModule,
+    StorageModule,
   ],
   controllers: [AppController],
   providers: [AppService],

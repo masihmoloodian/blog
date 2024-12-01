@@ -5,17 +5,25 @@ import { BlogEntity } from './entities/blog.entity';
 import { UserService } from 'src/user/user.service';
 import { CreateBlogDto } from './dto/create-blog.dto';
 import { UpdateBlogDto } from './dto/update-blog.dto';
+import { StorageService } from 'src/storage/storage.service';
 
 @Injectable()
 export class BlogService {
   constructor(
     @InjectRepository(BlogEntity)
     private readonly blogRepository: Repository<BlogEntity>,
-    private readonly userService: UserService,
+    private readonly storageService: StorageService,
   ) {}
 
   async create(userId: string, dto: CreateBlogDto): Promise<BlogEntity> {
-    const blog = this.blogRepository.create({ userId, ...dto });
+    let imageUrl: string;
+    if (dto.imageObjectKey) {
+      const publicUrl = await this.storageService.generatePublicUrl(
+        dto.imageObjectKey,
+      );
+      imageUrl = publicUrl;
+    }
+    const blog = this.blogRepository.create({ userId, ...dto, imageUrl });
     return this.blogRepository.save(blog);
   }
 

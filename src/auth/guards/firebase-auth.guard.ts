@@ -21,6 +21,8 @@ export class FirebaseAuthGuard extends AuthGuard('firebase') {
     const firebaseUser: FirebaseUser = request.user;
 
     // Fetch the local user using the Firebase UID
+    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+
     const localUser = await this.userService.getByFirebaseUid(firebaseUser.uid);
     if (!localUser)
       throw new UnauthorizedException('User not found in database');
