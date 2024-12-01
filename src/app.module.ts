@@ -7,6 +7,7 @@ import configuration from './config/configuration';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { FirebaseModule } from './firebase/firebase.module';
+import { BlogModule } from './blog/blog.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { FirebaseModule } from './firebase/firebase.module';
     UserModule,
     FirebaseModule,
     AuthModule,
+    BlogModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,5 +1,6 @@
+import { BlogEntity } from 'src/blog/entities/blog.entity';
 import { ParentEntity } from 'src/shared/parent.entity';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('users')
 export class UserEntity extends ParentEntity {
@@ -17,4 +18,7 @@ export class UserEntity extends ParentEntity {
 
   @Column({ default: true })
   active: boolean;
+
+  @OneToMany(() => BlogEntity, (blog) => blog.user)
+  blogs: BlogEntity[];
 }

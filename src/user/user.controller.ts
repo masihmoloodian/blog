@@ -4,6 +4,7 @@ import { FirebaseAuthGuard } from 'src/auth/guards/firebase-auth.guard';
 import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 import { ResponseDto } from 'src/shared/response.dto';
 import { FirebaseUser, User } from 'src/auth/decorator/user.decorator';
+import { UserEntity } from './entities/user.entity';
 
 @Controller('user')
 export class UserController {
@@ -13,8 +14,8 @@ export class UserController {
   @ApiOperation({ summary: 'Get user profile' })
   @ApiBearerAuth()
   @UseGuards(FirebaseAuthGuard)
-  async getProfile(@User() firebaseUser: FirebaseUser) {
-    const user = await this.userService.getByFirebaseUid(firebaseUser.uid);
-    return new ResponseDto(user);
+  async getProfile(@User() user: UserEntity) {
+    const _user = await this.userService.getById(user.id);
+    return new ResponseDto(_user);
   }
 }

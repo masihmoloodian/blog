@@ -17,15 +17,7 @@ export class AuthService {
 
   async validateUser(decodedToken: any) {
     const firebaseUid = decodedToken.uid;
-    let user = await this.userService.getByFirebaseUid(firebaseUid);
-    if (!user) {
-      user = await this.userService.create({
-        firebaseUid,
-        email: decodedToken.email,
-        name: decodedToken.name,
-      });
-    }
-    return user;
+    return await this.userService.getByFirebaseUid(firebaseUid);
   }
 
   async login(dto: LoginDto) {
@@ -51,8 +43,7 @@ export class AuthService {
       const data = await response.json();
       const { idToken, localId } = data;
 
-      const user = await this.userService.getByFirebaseUid(localId);
-      if (!user) throw new UnauthorizedException();
+      await this.userService.getByFirebaseUid(localId);
 
       return { idToken };
     } catch (error) {
