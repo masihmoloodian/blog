@@ -8,6 +8,7 @@ import {
   Param,
   ParseUUIDPipe,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { BlogService } from './blog.service';
 import { User } from 'src/auth/decorator/user.decorator';
@@ -17,6 +18,7 @@ import { CreateBlogDto } from './dto/create-blog.dto';
 import { ResponseDto } from 'src/shared/response.dto';
 import { UpdateBlogDto } from './dto/update-blog.dto';
 import { UserEntity } from 'src/user/entities/user.entity';
+import { PaginationDto } from 'src/shared/pagination.dto';
 
 @Controller('blogs')
 export class BlogController {
@@ -32,11 +34,11 @@ export class BlogController {
   }
 
   @Get()
-  @ApiOperation({ summary: 'Get all blogs' })
+  @ApiOperation({ summary: 'Get all blogs with pagination' })
   @ApiBearerAuth()
   @UseGuards(FirebaseAuthGuard)
-  async findAll(@User() user: UserEntity) {
-    const result = await this.blogService.getAll(user.id);
+  async findAll(@User() user: UserEntity, @Query() pagination: PaginationDto) {
+    const result = await this.blogService.getAll(user.id, pagination);
     return new ResponseDto(result);
   }
 
