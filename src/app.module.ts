@@ -5,6 +5,8 @@ import { UserModule } from './user/user.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import configuration from './config/configuration';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from './auth/auth.module';
+import { FirebaseModule } from './firebase/firebase.module';
 
 @Module({
   imports: [
@@ -27,6 +29,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       inject: [ConfigService],
     }),
     UserModule,
+    FirebaseModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
