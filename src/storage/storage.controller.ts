@@ -3,8 +3,6 @@ import { StorageService } from './storage.service';
 import { ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { FirebaseAuthGuard } from 'src/auth/guards/firebase-auth.guard';
 import { ResponseDto } from 'src/shared/response.dto';
-import { User } from 'src/auth/decorator/user.decorator';
-import { UserEntity } from 'src/user/entities/user.entity';
 
 @Controller('storage')
 export class StorageController {
