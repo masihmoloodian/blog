@@ -21,9 +21,8 @@ export interface FirebaseUser {
 }
 
 export const User = createParamDecorator(
-  (data: unknown, ctx: ExecutionContext): string => {
+  (data: unknown, ctx: ExecutionContext) => {
     const request = ctx.switchToHttp().getRequest();
-    const user: FirebaseUser = request.user;
-    return user?.uid;
+    return request.user;
   },
 );
